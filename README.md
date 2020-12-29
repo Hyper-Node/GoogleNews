@@ -11,6 +11,25 @@
 ![GitHub Action](https://github.com/Iceloof/GoogleNews/workflows/GitHub%20Action/badge.svg)
 ![GitHub](https://img.shields.io/github/license/Iceloof/GoogleNews)
 
+This is just a slight modification. 
+
+
+```
+googlenews.get_page(2)
+```
+Doesn't seem to work. To get a custom number of fetched entries
+this fork introduces max_num_entries parameter. Usuable like this.
+```
+googlenews = GoogleNews(lang=language, start=start_date, end=end_date, maxnum_entries=maxcount)
+```
+or after constructor
+```
+googlenews.setmaxnum_entries(100)
+```
+
+
+
+
 ## Install
 ```
 pip install GoogleNews

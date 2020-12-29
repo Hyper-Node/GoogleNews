@@ -33,7 +33,7 @@ def lexical_date_parser(date_to_check):
 
 class GoogleNews:
 
-    def __init__(self,lang="en",period="",start="",end="",encode="utf-8"):
+    def __init__(self,lang="en",period="",start="",end="",encode="utf-8", max_num_entries=10):
         self.__texts = []
         self.__links = []
         self.__results = []
@@ -44,6 +44,7 @@ class GoogleNews:
         self.__start = start
         self.__end = end
         self.__encode = encode
+        self.__max_num_entries = max_num_entries
 
     def set_lang(self, lang):
         self.__lang = lang
@@ -58,6 +59,9 @@ class GoogleNews:
     def setperiod(self, period):
         """Don't remove this, will affect old version user when upgrade"""
         self.set_period(period)
+
+    def setmaxnum_entries(self, maxnumentries):
+        self.__max_num_entries = maxnumentries
 
     def set_time_range(self, start, end):
         self.__start = start
@@ -94,11 +98,11 @@ class GoogleNews:
         """
         try:
             if self.__start != "" and self.__end != "":
-                self.url = "https://www.google.com/search?q={}&lr=lang_{}&tbs=lr:lang_1{},cdr:1,cd_min:{},cd_max:{}&tbm=nws&start={}".format(self.__key,self.__lang,self.__lang,self.__start,self.__end,(10 * (page - 1)))
+                self.url = "https://www.google.com/search?q={}&lr=lang_{}&tbs=lr:lang_1{},cdr:1,cd_min:{},cd_max:{}&tbm=nws&num={}".format(self.__key,self.__lang,self.__lang,self.__start,self.__end, self.__max_num_entries)
             elif self.__period != "":
-                self.url = "https://www.google.com/search?q={}&lr=lang_{}&tbs=lr:lang_1{},qdr:{},&tbm=nws&start={}".format(self.__key,self.__lang,self.__lang,self.__period,(10 * (page - 1))) 
+                self.url = "https://www.google.com/search?q={}&lr=lang_{}&tbs=lr:lang_1{},qdr:{},&tbm=nws&num={}".format(self.__key,self.__lang,self.__lang, self.__max_num_entries)
             else:
-                self.url = "https://www.google.com/search?q={}&lr=lang_{}&tbs=lr:lang_1{}&tbm=nws&start={}".format(self.__key,self.__lang,self.__lang,(10 * (page - 1))) 
+                self.url = "https://www.google.com/search?q={}&lr=lang_{}&tbs=lr:lang_1{}&tbm=nws&num={}".format(self.__key,self.__lang,self.__lang, self.__max_num_entries)
         except AttributeError:
             raise AttributeError("You need to run a search() before using get_page().")
         try:
